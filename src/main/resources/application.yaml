@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: HieuHien_DevelopingCRUD_Lab1
+  datasource:
+    xa:
+      data-source-class-name:
