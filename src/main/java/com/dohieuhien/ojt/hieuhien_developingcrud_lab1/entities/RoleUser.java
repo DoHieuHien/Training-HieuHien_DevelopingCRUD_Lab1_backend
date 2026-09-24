@@ -6,28 +6,19 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Table
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
 
-public class DataInformation {
+public class RoleUser {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column (nullable = false, unique = true, length = 20)
-    private String idData;
-
-    @Column (nullable = false, columnDefinition = "NVARCHAR(50)")
-    private String dataDetails;
-
-    @Column (nullable = false)
-    private LocalDateTime dataDate;
+    private String roleName;
 }
