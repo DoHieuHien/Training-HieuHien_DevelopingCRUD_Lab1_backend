@@ -9,31 +9,31 @@ import lombok.NoArgsConstructor;
 
 
 @Entity
-@Table
+@Table (name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
 
-public class User {
+public class Users {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column (unique = true, nullable = false, length = 20)
+    @Column (name = "userid", unique = true, nullable = false, length = 20)
     private String userid;
 
-    @Column (unique = true,nullable = false, length = 50)
+    @Column (name = "username",unique = true,nullable = false, length = 50)
     private String username;
 
-    @Column (nullable = false, length = 50)
+    @Column (name = "email",nullable = false, length = 50)
     private String email;
 
-    @Column (nullable = false, length = 20)
+    @Column (name = "password", nullable = false, length = 50)
     private String password;
 
     @ManyToOne (fetch = FetchType.EAGER)
-    @JoinColumn (nullable = false)
-    private RoleUser role;
+    @JoinColumn (name = "role_id", nullable = false)
+    private Role role;
 }

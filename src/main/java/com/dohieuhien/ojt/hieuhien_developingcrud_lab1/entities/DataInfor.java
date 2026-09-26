@@ -9,25 +9,25 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table
+@Table (name = "data_infor")
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
 
-public class DataInformation {
+public class DataInfor {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column (nullable = false, unique = true, length = 20)
+    @Column (name = "id_data", nullable = false, unique = true, length = 20)
     private String idData;
 
-    @Column (nullable = false, columnDefinition = "NVARCHAR(50)")
+    @Column (name = "data_details", nullable = false, length = 50)
     private String dataDetails;
 
-    @Column (nullable = false)
+    @Column (name = "data_date", nullable = false)
     private LocalDateTime dataDate;
 }

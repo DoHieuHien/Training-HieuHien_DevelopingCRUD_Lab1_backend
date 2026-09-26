@@ -1,6 +1,6 @@
 package com.dohieuhien.ojt.hieuhien_developingcrud_lab1.config;
 
-import com.dohieuhien.ojt.hieuhien_developingcrud_lab1.service.UserDetailService;
+import com.dohieuhien.ojt.hieuhien_developingcrud_lab1.service.UserlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig {
 
     @Autowired
-    private UserDetailService userDetailService;
+    private UserlService userDetailService;
 
     @Bean
     public PasswordEncoder passwordEncoder(){

@@ -7,18 +7,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table
+@Table (name = "roles")
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
 
-public class RoleUser {
+public class Role {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column (nullable = false, unique = true, length = 20)
+    @Column (name = "role_name", nullable = false, unique = true, length = 20)
     private String roleName;
 }
