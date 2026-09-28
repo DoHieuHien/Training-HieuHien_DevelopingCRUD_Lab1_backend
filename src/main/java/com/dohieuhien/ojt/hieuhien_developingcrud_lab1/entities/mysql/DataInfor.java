@@ -1,4 +1,4 @@
-package com.dohieuhien.ojt.hieuhien_developingcrud_lab1.entities;
+package com.dohieuhien.ojt.hieuhien_developingcrud_lab1.entities.mysql;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

@@ -1,6 +1,6 @@
 package com.dohieuhien.ojt.hieuhien_developingcrud_lab1.repository;
 
-import com.dohieuhien.ojt.hieuhien_developingcrud_lab1.entities.Role;
+import com.dohieuhien.ojt.hieuhien_developingcrud_lab1.entities.mysql.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
