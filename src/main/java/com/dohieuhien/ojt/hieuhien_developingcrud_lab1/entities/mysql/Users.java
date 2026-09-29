@@ -30,7 +30,7 @@ public class Users {
     @Column (name = "email",nullable = false, length = 50)
     private String email;
 
-    @Column (name = "password", nullable = false, length = 50)
+    @Column (name = "password", nullable = false, length = 60)
     private String password;
 
     @ManyToOne (fetch = FetchType.EAGER)
