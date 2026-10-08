@@ -26,7 +26,13 @@ public class ImportDataController {
         if(file.isEmpty()){
             return ResponseEntity.badRequest().body(Map.of("message","Empty file"));
         }
+        String name = file.getOriginalFilename();
+        if (name == null || !name.toLowerCase().endsWith(".csv")) {
+            return ResponseEntity.badRequest().body(Map.of("message", "File không hợp lệ, chỉ chấp nhận file .csv"));
+        }
         int count = dataInforService.importData(file);
         return ResponseEntity.ok(Map.of("message", "Import Successfully"));
     }
+
+
 }

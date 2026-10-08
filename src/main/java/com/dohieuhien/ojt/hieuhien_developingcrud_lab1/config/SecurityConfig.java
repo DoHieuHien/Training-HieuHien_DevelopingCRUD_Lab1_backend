@@ -54,8 +54,8 @@ import java.util.List;
                 .httpBasic(basic -> basic.disable())
                 .authorizeHttpRequests(auth ->auth
                         .requestMatchers("/hien/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/hien/data/import").hasAnyRole("ADMIN", "MANAGER").requestMatchers(HttpMethod.GET, "/hien/data/export").hasAnyRole("ADMIN", "MANAGER", "OPERATION").requestMatchers(HttpMethod.GET, "/hien/data/***").authenticated()
-                        .requestMatchers("/hien/dashboard/***").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/hien/data/import").hasAnyRole("ADMIN", "MANAGER").requestMatchers(HttpMethod.GET, "/hien/data/export").hasAnyRole("ADMIN", "MANAGER", "OPERATION").requestMatchers(HttpMethod.GET, "/hien/data/**").authenticated()
+                        .requestMatchers("/hien/dashboard/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(ex -> ex.authenticationEntryPoint((request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED))
