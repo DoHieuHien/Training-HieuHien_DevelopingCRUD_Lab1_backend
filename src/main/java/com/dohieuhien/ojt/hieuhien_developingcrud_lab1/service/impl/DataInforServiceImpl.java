@@ -24,7 +24,7 @@ public class DataInforServiceImpl implements DataInforService {
 
     @Autowired
     private DataInforRepo dataInforRepo;
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("d/M/yyyy HH:mm");
 
     @Override
     public Page<DataInfor> listPage(Pageable pageable) {
@@ -38,22 +38,53 @@ public class DataInforServiceImpl implements DataInforService {
 
     @Override
     public int importData(MultipartFile file) throws IOException {
+
         List<DataInfor> toSave = new ArrayList<>();
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8))) {
-            String line = reader.readLine();
-            while ((line = reader.readLine()) != null) {
-                if (line.isBlank()) continue;
-                String[] cols = line.split(",", -1);
-                if (cols.length < -3) continue;
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(
+                        file.getInputStream(),
+                        StandardCharsets.UTF_8))) {
 
-                toSave.add(DataInfor.builder()
+            // Bỏ dòng header
+            String header = reader.readLine();
+
+            System.out.println("HEADER: " + header);
+
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+
+                System.out.println("LINE: " + line);
+
+                if (line.isBlank()) {
+                    continue;
+                }
+
+                String[] cols = line.split(",", -1);
+
+                System.out.println("COLUMN COUNT: " + cols.length);
+
+                if (cols.length < 3) {
+                    System.out.println("SKIP: Không đủ 3 cột");
+                    continue;
+                }
+
+                DataInfor data = DataInfor.builder()
                         .idData(cols[0].trim())
                         .dataDetails(cols[1].trim())
-                        .dataDate(LocalDateTime.parse(cols[2].trim(), DATE_TIME_FORMATTER))
-                        .build());
+                        .dataDate(
+                                LocalDateTime.parse(
+                                        cols[2].trim(),
+                                        DATE_TIME_FORMATTER
+                                )
+                        )
+                        .build();
+
+                toSave.add(data);
             }
         }
+
         dataInforRepo.saveAll(toSave);
         return toSave.size();
     }
@@ -61,13 +92,21 @@ public class DataInforServiceImpl implements DataInforService {
 
     @Override
     public byte[] exportData() {
-        StringBuilder stringBuilder = new StringBuilder("id,idData,dataDetails,dataDate\n");
-        for (DataInfor x : dataInforRepo.findAll()){
-            stringBuilder.append(x.getId()).append(",")
-                         .append(x.getIdData()).append(",")
-                         .append(x.getDataDetails()).append(",")
-                         .append(x.getDataDate().format(DATE_TIME_FORMATTER)).append("\n");
+
+        StringBuilder stringBuilder =
+                new StringBuilder("idData,dataDetails,dataDate\n");
+
+        for (DataInfor x : dataInforRepo.findAll()) {
+
+            stringBuilder
+                    .append(x.getIdData()).append(",")
+                    .append(x.getDataDetails()).append(",")
+                    .append(x.getDataDate().format(DATE_TIME_FORMATTER))
+                    .append("\n");
         }
-        return stringBuilder.toString().getBytes(StandardCharsets.UTF_8);
+
+        return stringBuilder
+                .toString()
+                .getBytes(StandardCharsets.UTF_8);
     }
 }

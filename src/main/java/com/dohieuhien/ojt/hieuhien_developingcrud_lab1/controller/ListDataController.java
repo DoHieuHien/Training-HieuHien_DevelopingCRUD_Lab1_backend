@@ -1,8 +1,10 @@
 package com.dohieuhien.ojt.hieuhien_developingcrud_lab1.controller;
 
 import com.dohieuhien.ojt.hieuhien_developingcrud_lab1.dto.LoginRespond;
+import com.dohieuhien.ojt.hieuhien_developingcrud_lab1.entities.mongo.DataRecord;
 import com.dohieuhien.ojt.hieuhien_developingcrud_lab1.entities.mysql.DataInfor;
 import com.dohieuhien.ojt.hieuhien_developingcrud_lab1.service.DataInforService;
+import com.dohieuhien.ojt.hieuhien_developingcrud_lab1.service.DataRecordService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,20 +23,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ListDataController {
 
-    private final DataInforService dataInforService;
+    private final DataRecordService dataRecordService;
 
     @GetMapping
-    public Page<DataInfor> infors(@RequestParam(defaultValue = "0") int page,
-                                  @RequestParam(defaultValue = "10") int size){
-        return dataInforService.listPage(PageRequest.of(page, size, Sort.by("dataDate").descending()));
+    public Page<DataRecord> list(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        return dataRecordService.list(PageRequest.of(page, size));
     }
 
     @GetMapping("/export")
-    public ResponseEntity<byte[]> export(){
-        byte[] bytes = dataInforService.exportData();
+    public ResponseEntity<byte[]> export() {
+        byte[] csv = dataRecordService.exportCsv();
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=data-export.detail")
-                .contentType(MediaType.parseMediaType("text/detail"))
-                .body(bytes);
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=data-export.csv")
+                .contentType(MediaType.parseMediaType("text/csv"))
+                .body(csv);
     }
 }

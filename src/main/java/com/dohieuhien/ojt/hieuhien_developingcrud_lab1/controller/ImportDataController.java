@@ -1,6 +1,7 @@
 package com.dohieuhien.ojt.hieuhien_developingcrud_lab1.controller;
 
 import com.dohieuhien.ojt.hieuhien_developingcrud_lab1.service.DataInforService;
+import com.dohieuhien.ojt.hieuhien_developingcrud_lab1.service.DataRecordService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,20 +20,14 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ImportDataController {
 
-    private final DataInforService dataInforService;
+    private final DataRecordService dataRecordService;
 
     @PostMapping("/import")
-    public ResponseEntity<Map<String, Object>> importData(@RequestParam("file")MultipartFile file) throws IOException {
-        if(file.isEmpty()){
-            return ResponseEntity.badRequest().body(Map.of("message","Empty file"));
+    public ResponseEntity<Map<String, Object>> importData(@RequestParam("file") MultipartFile file) throws IOException {
+        if (file.isEmpty()) {
+            return ResponseEntity.badRequest().body(Map.of("message", "File rỗng"));
         }
-        String name = file.getOriginalFilename();
-        if (name == null || !name.toLowerCase().endsWith(".csv")) {
-            return ResponseEntity.badRequest().body(Map.of("message", "File không hợp lệ, chỉ chấp nhận file .csv"));
-        }
-        int count = dataInforService.importData(file);
-        return ResponseEntity.ok(Map.of("message", "Import Successfully"));
+        int count = dataRecordService.importCsv(file);
+        return ResponseEntity.ok(Map.of("message", "Import thành công", "count", count));
     }
-
-
 }
