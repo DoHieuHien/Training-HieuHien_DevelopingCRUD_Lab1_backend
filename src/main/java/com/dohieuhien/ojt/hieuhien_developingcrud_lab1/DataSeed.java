@@ -31,7 +31,7 @@ public class DataSeed {
                 Role admin = roleRepo.findByRoleName("ADMIN").orElseThrow();
                 userRepo.save(Users.builder()
                         .userid("U001").username("admin").email("admin@gmail.com")
-                        .password(encoder.encode("123456")).role(admin).build());
+                        .password(encoder.encode("9876543")).role(admin).build());
 
                 Role manager = roleRepo.findByRoleName("MANAGER").orElseThrow();
                 userRepo.save(Users.builder()
